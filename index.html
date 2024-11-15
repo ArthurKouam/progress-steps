@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Steps</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <div class="number-contain">
+            <div class="bar"></div>
+            <div class="progress" id="progress"></div>
+            <div class="item active">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+            <div class="item">4</div>
+        </div>
+        
+        <div class="btn-contain">
+            <button id="prev" disabled>Prev</button>
+            <button id="next" class="active">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const items = Array.from(document.getElementsByClassName('item'));
+        const next = document.getElementById('next');
+        const prev = document.getElementById('prev');
+        const progressBar = document.getElementById('progress');
+        let position = 0;
+        next.addEventListener('click', ()=>{
+            position++;
+            prev.disabled = false;
+            prev.classList.add("active");
+            if(position === items.length-1){
+                next.disabled = true;
+                next.classList.remove("active");
+            }
+            progress();
+        })
+
+        prev.addEventListener('click', ()=>{
+            position--;
+            next.disabled = false;
+            next.classList.add("active");
+            if(position === 0){
+                prev.disabled = true;
+                prev.classList.remove('active');
+            }
+            progress();
+        })
+
+        function progress(){
+            items.forEach((item, index) => {
+                if(index <= position){
+                    item.classList.add("active");
+                }else{
+                    item.classList.remove("active");
+                }
+            })
+
+            progressBar.style.width = (position/(items.length-1))*100+"%";
+        }
+    </script>
+
+    
+</body>
+</html>
